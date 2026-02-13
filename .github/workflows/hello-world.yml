@@ -1,0 +1,14 @@
+name: My First Pipeline
+
+# This tells the pipeline to run every time you "push" code to the repo
+on: [push]
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest  # Use a fresh Linux machine provided by GitHub
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4  # This step copies your code onto the Linux machine
+
+      - name: Greet the user
+        run: echo "Hello World! My first pipeline is running."
