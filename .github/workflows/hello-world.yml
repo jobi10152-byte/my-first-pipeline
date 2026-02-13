@@ -1,14 +1,22 @@
 name: My First Pipeline
 
-# This tells the pipeline to run every time you "push" code to the repo
 on: [push]
 
 jobs:
-  say-hello:
-    runs-on: ubuntu-latest  # Use a fresh Linux machine provided by GitHub
+  build-and-test:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # This step copies your code onto the Linux machine
+        uses: actions/checkout@v4
 
-      - name: Greet the user
-        run: echo "Hello World! My first pipeline is running."
+      - name: Build Step
+        run: echo "Compiling things... Done!"
+
+      - name: Test Step (Check for file)
+        run: |
+          if [ -f "README.md" ]; then
+            echo "Test Passed: README exists!"
+          else
+            echo "Test Failed: README is missing!"
+            exit 1
+          fi
