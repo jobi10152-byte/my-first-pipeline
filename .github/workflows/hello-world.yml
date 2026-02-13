@@ -1,4 +1,4 @@
-name: My First Pipeline
+name: Secure Pipeline
 
 on: [push]
 
@@ -9,14 +9,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build Step
-        run: echo "Compiling things... Done!"
-
-      - name: Test Step (Check for file)
+      - name: Test Step
         run: |
           if [ -f "README.md" ]; then
-            echo "Test Passed: README exists!"
+            echo "Success!"
           else
-            echo "Test Failed: README is missing!"
             exit 1
           fi
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript # You can add python, java, etc.
+
+      - name: Perform Scan
+        uses: github/codeql-action/analyze@v3
